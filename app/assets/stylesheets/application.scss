@@ -1,2 +1,26 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
+ 
+ .social{
+  margin: 0;
+  padding: 0 auto;
+  text-align: center;
+ }
+ .social-btn {
+   text-decoration: none;
+   color: #00008B;
+   border: 1px solid #00008B;
+   border-radius: 2px;
+   
+   display: inline-block;
+   
+   padding: 10px 15px;
+   width: 200px;
+   margin: 5px;
+ }
+ 
+  .social-btn:hover {
+   text-decoration: none;
+   background-color: 	#00008B;
+   color: white;
+  }
