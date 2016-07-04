@@ -1,21 +1,27 @@
 class PostsController < ApplicationController
   def index
     
-    #retrieve first post and every fifth posts
-    selected_id = (1..Post.count).select{|e| e == 1 || e % 5 ==0}
-    #edit their title
-    Post.where(id: selected_id).update_all("title = title || ' SPAM'")
-    
     @posts = Post.all
   end
 
-  def show
-  end
-
   def new
+    @post = Post.new
   end
 
-  def edit
-    
+  def create
+     @post = Post.new
+     @post.title = params[:post][:title]
+     @post.body = params[:post][:body]
+
+     if @post.save
+       flash[:notice] = "Post was saved successfully."
+       redirect_to @post
+     else
+       flash.now[:alert] = "There was an error saving the post. Please try again."
+       render :new
+     end
+  end
+  def show
+    @post = Post.find(params[:id])
   end
 end
