@@ -33,4 +33,18 @@ module RandomData
      sentence = strings.join(" ")
      sentence.capitalize << "????"
    end
+   
+   def self.random_number
+      rand(20..50)
+   end
+   
+   def self.random_sentence1
+     strings = []
+     rand(3..8).times do
+       strings << random_word
+     end
+ 
+     sentence = strings.join(" ")
+     sentence.capitalize << " [Sponsored]"
+   end
 end
