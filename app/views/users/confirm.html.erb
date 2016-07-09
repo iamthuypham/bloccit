@@ -6,9 +6,13 @@
         <h3>Email: <%= @user.email %></h3>
         <h3>Name: <%= @user.name %></h3>
     </div>
+  </div>
+  <div class="row">
     <div class="col-md-4">
           <%= button_to "Yes", {controller: "users", action: "create", params: params}, class: 'btn btn-success' %>
-          <%= button_to "No", new_user_path, class: 'btn btn-default' %>
+    </div>      
+    <div class="col-md-4">
+          <%= button_to "No", {controller: "users", action: "new"}, class: 'btn btn-default', :method => :get %>
     </div>
   </div>
- </div>
+ 
