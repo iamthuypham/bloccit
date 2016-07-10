@@ -14,6 +14,7 @@
            <small>
              submitted <%= time_ago_in_words(post.created_at) %> ago <br>
              <%= post.comments.count %> Comments
+             submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %> <br>
            </small>
          </div>
        </div>
