@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
-     let(:my_topic) { Topic.create!(name:  RandomData.random_sentence, description: RandomData.random_paragraph) }
-   let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
+  let(:my_user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
+  let(:my_topic) { Topic.create!(name:  RandomData.random_sentence, description: RandomData.random_paragraph) }
+  let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user) }
+
    
   describe "GET #new" do
     it "returns http success" do
@@ -19,20 +21,20 @@ RSpec.describe PostsController, type: :controller do
     end
   end
  
-    describe "POST create" do
-      it "increases the number of Post by 1" do
-        expect{post :create, topic_id: my_topic.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}}.to change(Post,:count).by(1)
+  describe "POST create" do
+    it "increases the number of Post by 1" do
+      expect{post :create, topic_id: my_topic.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}}.to change(Post,:count).by(1)
 
-      end
-      it "assigns the new post to @post" do
+    end
+    it "assigns the new post to @post" do
           post :create, topic_id: my_topic.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
-      end
+    end
 
-      it "redirects to the new post" do
+    it "redirects to the new post" do
         post :create, topic_id: my_topic.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
                expect(response).to redirect_to [my_topic, Post.last]
-      end
     end
+  end
     describe "GET show" do
      it "returns http success" do
         get :show, topic_id: my_topic.id, id: my_post.id
@@ -47,18 +49,18 @@ RSpec.describe PostsController, type: :controller do
        expect(assigns(:post)).to eq(my_post)
      end
    end
-    describe "GET edit" do
-     it "returns http success" do
+  describe "GET edit" do
+    it "returns http success" do
         get :edit, topic_id: my_topic.id, id: my_post.id
        expect(response).to have_http_status(:success)
-     end
+    end
  
-     it "renders the #edit view" do
+    it "renders the #edit view" do
        get :edit, topic_id: my_topic.id, id: my_post.id
        expect(response).to render_template :edit
-     end
+    end
 
-     it "assigns post to be updated to @post" do
+    it "assigns post to be updated to @post" do
        get :edit, topic_id: my_topic.id, id: my_post.id
  
        post_instance = assigns(:post)
@@ -66,20 +68,20 @@ RSpec.describe PostsController, type: :controller do
        expect(post_instance.id).to eq my_post.id
        expect(post_instance.title).to eq my_post.title
        expect(post_instance.body).to eq my_post.body
-     end
-   end
-    describe "PUT update" do
-     it "updates post with expected attributes" do
-       new_title = RandomData.random_sentence
-       new_body = RandomData.random_paragraph
+    end
+  end
+  describe "PUT update" do
+    it "updates post with expected attributes" do
+      new_title = RandomData.random_sentence
+      new_body = RandomData.random_paragraph
  
       put :update, topic_id: my_topic.id, id: my_post.id, post: {title: new_title, body: new_body}
 
-       updated_post = assigns(:post)
-       expect(updated_post.id).to eq my_post.id
-       expect(updated_post.title).to eq new_title
-       expect(updated_post.body).to eq new_body
-     end
+    updated_post = assigns(:post)
+    expect(updated_post.id).to eq my_post.id
+    expect(updated_post.title).to eq new_title
+    expect(updated_post.body).to eq new_body
+    end
  
      it "redirects to the updated post" do
        new_title = RandomData.random_sentence
