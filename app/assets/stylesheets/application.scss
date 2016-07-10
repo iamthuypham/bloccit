@@ -1,9 +1,5 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
- .user-info {
-   margin-top: 9px;
- }
- 
  .nav {
    margin-top: 5px;
  }
@@ -31,3 +27,7 @@
    background-color: 	#00008B;
    color: white;
   }
+  .user-info{
+   padding: 5px 15px;
+  }
+
