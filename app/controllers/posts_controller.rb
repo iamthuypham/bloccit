@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :require_sign_in, except: :show
+  # before_action :authorize_user_post, only: [:delete]
 
   def new
     @topic = Topic.find(params[:topic_id])
@@ -62,5 +63,11 @@ class PostsController < ApplicationController
  
    def post_params
      params.require(:post).permit(:title, :body)
+   end
+   def authorize_user_post
+     if current_user.moderator?
+       flash[:alert] = "You must be an admin/moderator to do that."
+       redirect_to posts_path
+     end
    end
 end
