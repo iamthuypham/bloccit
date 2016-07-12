@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :labels, only: [:show]
+
   resources :questions
 
   resources :topics do
