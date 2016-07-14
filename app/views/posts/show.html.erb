@@ -23,10 +23,13 @@
         <%= render @post.comments %>
      </div>
    </div>
-   
-     <!--< if current_user %>-->
-     <!--  <= render 'comments/form', comment: Comment.new, post: @post %>-->
-     <!--< end %>-->
+    <!--< Why the Comment Form for post is not working %>-->
+   <!--<div class="form-group">-->
+   <!--  <= render partial: 'comments/form' %>-->
+   <!--</div>-->
+     <% if current_user %>
+       <%= render 'comments/form', comment: Comment.new, place: @post %>
+     <% end %>
    </div>
    <br>
    <div class="col-md-4">

@@ -7,18 +7,15 @@ class PostsController < ApplicationController
   end
 
   def create
-    # @post = Post.new
-    # @post.title = params[:post][:title]
-    # @post.body = params[:post][:body]
     @topic = Topic.find(params[:topic_id])
-      
-    # @post.topic = @topic
     @post = @topic.posts.build(post_params)
+    @comment = @post.comments.new(comment_params)
 
     @post.user = current_user
 
-    if @post.save
+    if @post.save || @comment.save
       @post.labels = Label.update_labels(params[:post][:labels])
+      @post.comments = Comment.update_comments(params[:post][:comments])
       flash[:notice] = "Post was saved successfully."
       redirect_to [@topic, @post]
     else
@@ -65,5 +62,9 @@ class PostsController < ApplicationController
  
    def post_params
      params.require(:post).permit(:title, :body)
+   end
+   
+   def comment_params
+     params.require(:comment).permit(:body)
    end
 end

@@ -7,9 +7,10 @@ class Comment < ActiveRecord::Base
   validates :body, length: { minimum: 5 }, presence: true
   validates :user, presence: true
   
-  def self.show_comments_in_topic(comments)
-     comments.split(",").map do |comment|
-       Label.find_or_create_by(body: comment.strip)
-     end
+  def self.update_comments(comments)
+    return Comment.none if comments.blank?
+    comments.map do |comment|
+       Comment.find_or_create_by(body: comment)
+    end
   end
 end
