@@ -20,6 +20,7 @@ class TopicsController < ApplicationController
     
     if @topic.save
       @topic.labels = Label.update_labels(params[:topic][:labels])
+      @topic.comments = Comment.update_comments(params[:topic][:comments])
       flash[:notice] = "Topic was saved successfully."
       redirect_to @topic
     else
@@ -45,6 +46,7 @@ class TopicsController < ApplicationController
  
      if @topic.save
         @topic.labels = Label.update_labels(params[:topic][:labels])
+        @topic.comments = Comment.update_comments(params[:topic][:comments])
         flash[:notice] = "Topic was updated successfully."
         redirect_to @topic
      else
