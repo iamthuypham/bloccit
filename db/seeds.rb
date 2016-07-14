@@ -30,9 +30,11 @@ require 'random_data'
      Comment.create!(
      user: users.sample,
      post: posts.sample,
+     topic: topics.sample,
      body: RandomData.random_paragraph
    )
  end
+ comments = Comment.all
  
  100.times do
    Question.create!(

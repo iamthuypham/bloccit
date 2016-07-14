@@ -22,6 +22,13 @@
        </div>
      <% end %>
    </div>
+ </div>
+ <h2>All Topic Comments</h2>
+ <div class="row">
+   <div class="col-md-8">
+     <%= render partial: "comments/list", locals: { comments: @topic.comments } %>
+   </div>
+ </div>
    <div class="col-md-4">
     <% if user_is_authorized_for_topics? %>
       <%= link_to "Edit Topic", edit_topic_path, class: 'btn btn-success' %>
@@ -31,4 +38,17 @@
       <%= link_to "New Post", new_topic_post_path(@topic), class: 'btn btn-success' %>
     <% end %>
    </div>
- </div>
+   </br>
+   <div class="row">
+    <div class="col-md-8">
+      <div class="form-group">
+         <%= render partial: 'comments/form', locals: {comment: @topic.comments.new} %>
+      </div>
+    </div>
+   </div>
+      
+   
+ <!--  <div class="form-group">-->
+ <!--        <= render partial: 'comments/form', comment: Comment.new, place: @topic %>-->
+ <!--      </div>-->
+ <!--</div>-->

@@ -10,8 +10,7 @@ class TopicsController < ApplicationController
     @topic = Topic.new
   end
   def create
-    # @topic = Topic.new
-    
+    @topic = Topic.new
     # @topic.id = params[:topic][:id]
     # @topic.name = params[:topic][:name]
     # @topic.description = params[:topic][:description]
@@ -29,6 +28,7 @@ class TopicsController < ApplicationController
   end
   def show
     @topic = Topic.find(params[:id])
+    # @topic.comments = Comment.create_comment(params[:topic][:comments]) unless params[:topic].nil?
   end
   def edit
     @topic = Topic.find(params[:id])
