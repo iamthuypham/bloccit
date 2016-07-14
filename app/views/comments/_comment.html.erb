@@ -2,10 +2,10 @@
   <div class="media-body">
     <small>
        <%= comment.user.name %> commented <%= time_ago_in_words(comment.created_at) %> ago
-       <% if user_is_authorized_for_comment?(comment) %>
-         | <%= link_to "Delete", [@post, comment], method: :delete %>
-       <% end %>
+       <!--Delete link should be here-->
     </small>
+    <!--Should use the comment_helper here-->
+    <!--< comments_for_topic(comment) %>-->
     <p><%= comment.body %></p>
   </div>
 </div>

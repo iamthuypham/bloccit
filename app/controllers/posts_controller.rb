@@ -28,6 +28,7 @@ class PostsController < ApplicationController
   end
   def show
     @post = Post.find(params[:id])
+    @post.comments = params[:post][:comments] unless params[:post].nil?
   end
   def edit
     @post = Post.find(params[:id])

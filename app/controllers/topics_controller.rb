@@ -29,9 +29,11 @@ class TopicsController < ApplicationController
   end
   def show
     @topic = Topic.find(params[:id])
+    @topic.comments = params[:topic][:comments] unless params[:topic].nil?
   end
   def edit
     @topic = Topic.find(params[:id])
+    
   end
   def update
       @topic = Topic.find(params[:id])

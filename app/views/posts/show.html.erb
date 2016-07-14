@@ -12,15 +12,21 @@
 </div>
 <br />
 <div class="row">
-   <div class="col-md-8">
-     <p><%= @post.body %></p>
-     <div>
-       <h3>Comments</h3>
-       <%= render @post.comments %>
+    <div class="col-md-8">
+        <p><%= @post.body %></p>
+    <div>
+</div>
+
+<h3>Post Comments</h3>
+   <div class="row">
+     <div class="col-md-8">
+        <%= render @post.comments %>
      </div>
-     <% if current_user %>
-       <%= render 'comments/form', comment: Comment.new, post: @post %>
-     <% end %>
+   </div>
+   
+     <!--< if current_user %>-->
+     <!--  <= render 'comments/form', comment: Comment.new, post: @post %>-->
+     <!--< end %>-->
    </div>
    <br>
    <div class="col-md-4">
