@@ -11,14 +11,18 @@ class TopicsController < ApplicationController
   end
   def create
     @topic = Topic.new
+    # @topic.comments = params[:topic][:comments]
     # @topic.id = params[:topic][:id]
     # @topic.name = params[:topic][:name]
     # @topic.description = params[:topic][:description]
-    
+     
     @topic = Topic.new(topic_params)
     
-    if @topic.save
+    
+    
+    if @topic.save || comment.save
       @topic.labels = Label.update_labels(params[:topic][:labels])
+      
       flash[:notice] = "Topic was saved successfully."
       redirect_to @topic
     else
@@ -28,7 +32,19 @@ class TopicsController < ApplicationController
   end
   def show
     @topic = Topic.find(params[:id])
-    # @topic.comments = Comment.create_comment(params[:topic][:comments]) unless params[:topic].nil?
+    # @topic.comments = params[:topic][:comments] unless params[:topic].nil?
+    # unless params[:topic].nil?
+    #     comment = @topic.comments.new(comment_params) 
+    #     comment.user = current_user 
+    
+    #     if comment.save
+    #         flash[:notice] = "Comment saved successfully."
+    #         redirect_to @topic
+    #     else
+    #         flash[:alert] = "Comment failed to save."
+    #         redirect_to @topic
+    #     end
+    # end
   end
   def edit
     @topic = Topic.find(params[:id])
@@ -72,5 +88,8 @@ class TopicsController < ApplicationController
        flash[:alert] = "You must be an admin to do that."
        redirect_to topics_path
      end
+   end
+   def comment_params
+     params.require(:comment).permit(:body)
    end
 end
