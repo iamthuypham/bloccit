@@ -27,6 +27,8 @@ RSpec.describe Post, type: :model do
   it { is_expected.to validate_length_of(:title).is_at_least(5) }
   it { is_expected.to validate_length_of(:body).is_at_least(20) }
    
+  let(:vote) { Vote.create!(value: 1, post: post, user: user) } 
+  
   describe "attributes" do
      it "has a title and body attribute" do
        expect(post).to have_attributes(title: title, body: body, user: user)
@@ -76,5 +78,16 @@ RSpec.describe Post, type: :model do
          expect(post.rank).to eq (old_rank - 1)
        end
      end
+     
+     describe "update_vote callback" do
+        it "triggers update_vote on save" do
+        expect(post).to receive(:update_vote).at_least(:once)
+        post.save!
+        end
+        it "#update_vote should call create_one_vote on vote " do
+       expect(vote).to receive(:create_one_vote).at_least(:once)
+       post.save!
+        end
+      end
   end
 end
