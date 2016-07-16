@@ -78,16 +78,16 @@ RSpec.describe Post, type: :model do
          expect(post.rank).to eq (old_rank - 1)
        end
      end
-     
-     describe "update_vote callback" do
-        it "triggers update_vote on save" do
-        expect(post).to receive(:update_vote).at_least(:once)
-        post.save!
+  end
+let(:my_post) { topic.posts.create!(title: "My Post Title", body: "This is my post with new up vote", user: user, topic: topic) }
+      describe "create_vote callback" do
+        it "triggers create_vote on save" do
+          expect(user.votes).to receive(:create)
+          user.votes.create!(value: 1, post: my_post)
         end
-        it "#update_vote should call create_one_vote on vote " do
-       expect(vote).to receive(:create_one_vote).at_least(:once)
-       post.save!
+        it "vote of new post should be value 1 and count 1" do
+          vote = Vote.where(post_id: my_post.id)
+          expect(vote.where(value: 1).count).to eq (1)
         end
       end
-  end
 end

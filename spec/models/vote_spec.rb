@@ -22,10 +22,4 @@ RSpec.describe Vote, type: :model do
         vote.save!
         end
    end
-  describe "#create_one_vote" do
-      it "create one vote when a new post is created" do
-         post.votes.create!(value: 1)
-         expect(post.up_vote).to eq (1)
-      end
-  end
 end
