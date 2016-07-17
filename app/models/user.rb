@@ -29,7 +29,10 @@ class User < ActiveRecord::Base
       "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
   end
   
-  def have_any_post_or_comment?
-    self.posts || self.comments
+  def have_any_post?
+    self.posts.count > 0
+  end
+  def have_any_comment?
+    self.comments.count > 0
   end
 end
