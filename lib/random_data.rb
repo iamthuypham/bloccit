@@ -33,18 +33,7 @@ module RandomData
      letters[0,rand(3..8)].join
    end
    
-   def self.random_question
-     strings = []
-     rand(3..8).times do
-       strings << random_word
-     end
- 
-     sentence = strings.join(" ")
-     sentence.capitalize << "????"
-   end
-   
    def self.random_number
       rand(20..50)
    end
-   
 end
