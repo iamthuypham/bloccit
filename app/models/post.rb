@@ -34,3 +34,5 @@ class Post < ActiveRecord::Base
     update_attribute(:rank, new_rank)
   end
 end
+
+  

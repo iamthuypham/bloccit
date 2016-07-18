@@ -35,4 +35,20 @@ class User < ActiveRecord::Base
   def have_any_comment?
     self.comments.count > 0
   end
+  
+  def favorite_post_of(user)
+    mark_fav = Favorite.where(user_id: user.id) #Find which favorite comes from a given user
+    list_fav_postID = mark_fav.pluck(:post_id) #Then find which post id that user marked favorite
+    @favorite_post = Post.where(id: list_fav_postID) #Then find post that user marked favorite
+  end
+  
+  def number_of_votes(user, a_favorite_post)
+    have_vote = Vote.where(user_id: user.id, post_id: a_favorite_post.id)
+    have_vote.count
+  end
+  
+  def number_of_comments(user, a_favorite_post)
+    have_comment = Comment.where(user_id: user.id, post_id: a_favorite_post.id)
+    have_comment.count
+  end
 end

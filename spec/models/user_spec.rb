@@ -22,7 +22,7 @@ RSpec.describe User, type: :model do
    it { is_expected.to validate_presence_of(:password) }
    it { is_expected.to have_secure_password }
    it { is_expected.to validate_length_of(:password).is_at_least(6) }
- 
+  
    describe "attributes" do
      it "should have name and email attributes" do
       expect(user).to have_attributes(name: user.name, email: user.email)
@@ -79,7 +79,6 @@ RSpec.describe User, type: :model do
          expect(user.admin?).to be_truthy
        end
      end
-   end
    
   describe "#favorite_for(post)" do
     before do
@@ -104,4 +103,29 @@ RSpec.describe User, type: :model do
       expect(known_user.avatar_url(48)).to eq(expected_gravatar)
     end
   end
+end
+  describe "favorite_posts_of_a_given_user" do
+      before do
+       topic = Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph)
+      @post1 = topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user)
+      @user1 = User.create!(name: "Tester", email:"tester@example.com", password: "password")
+       Favorite.create!(user_id: @user1.id, post_id: @post1.id)
+      end
+      it "returns the list of favorite posts" do
+      expect(@user1.favorite_post_of(@user1)).to eq([@post1])
+      end
+    
+      it "returns number of votes" do
+        Vote.create!(user_id: @user1.id, post_id: @post1.id, value: 1)
+        votes = Vote.where(user_id: @user1.id, post_id: @post1.id)
+        expect(@user1.number_of_votes(@user1, @post1)).to eq(votes.count)
+        p "Number of votes: #{votes.count}"
+      end
+      it "returns number of comments" do
+        Comment.create!(user_id: @user1.id, post_id: @post1.id, body: "This is comment from user1 for post1")
+        comments = Comment.where(user_id: @user1.id, post_id: @post1.id)
+        expect(@user1.number_of_comments(@user1, @post1)).to eq(comments.count)
+        p "Number of comments: #{comments.count}"
+      end
+    end
 end

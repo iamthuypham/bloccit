@@ -18,17 +18,39 @@
      </div>
    </div>
  </div>
-<% if @user.have_any_post? %>
-  <h2>Posts</h2>
-    <%= render @user.posts %>
-<% else %>
-  <h2>Posts</h2>
-  <p><%= @user.name %> has not submitted any posts yet</p>
-<% end %>
-<% if @user.have_any_comment? %>
-  <h2>Comments</h2>
-  <%= render @user.comments %>
-<% else %>
-  <h2>Comments</h2>
-  <p><%= @user.name %> has not submitted any comments yet</p>
-<% end %>
+ <div class="row">
+   <div class="col-md-8">
+     <div class="media">
+      <% if @user.have_any_post? %>
+        <h2>My Posts</h2>
+          <%= render @user.posts %>
+      <% else %>
+        <h2>My Posts</h2>
+        <p><%= @user.name %> has not submitted any posts yet</p>
+      <% end %>
+      <% if @user.have_any_comment? %>
+        <h2>My Comments</h2>
+        <%= render @user.comments %>
+      <% else %>
+        <h2>My Comments</h2>
+        <p><%= @user.name %> has not submitted any comments yet</p>
+      <% end %>
+     </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <h2>Favorite Posts</h2>
+      <div class="media">
+        <% @user.favorite_post_of(@user).each do |favorite_post| %>
+          <div>
+            <h5><%= favorite_post.title %></h5>
+            <small>
+              Voted <%=  pluralize(@user.number_of_votes(@user,favorite_post), 'time') %>,
+              Commented <%=  pluralize(@user.number_of_comments(@user,favorite_post), 'time') %>
+            </small>
+          </div>
+        <% end %>
+      </div>
+  </div>  
+</div>
