@@ -41,7 +41,11 @@ class User < ActiveRecord::Base
     list_fav_postID = mark_fav.pluck(:post_id) #Then find which post id that user marked favorite
     @favorite_post = Post.where(id: list_fav_postID) #Then find post that user marked favorite
   end
-  
+  def avatar_of_favorite_post(favorite_post, size)
+    @user = favorite_post.user
+    gravatar_id = Digest::MD5::hexdigest(@user.email).downcase
+      "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
+  end
   def number_of_votes(user, a_favorite_post)
     have_vote = Vote.where(user_id: user.id, post_id: a_favorite_post.id)
     have_vote.count

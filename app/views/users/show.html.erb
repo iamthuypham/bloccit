@@ -39,16 +39,24 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-8">
     <h2>Favorite Posts</h2>
       <div class="media">
         <% @user.favorite_post_of(@user).each do |favorite_post| %>
-          <div>
-            <h5><%= favorite_post.title %></h5>
-            <small>
+          <div class="row">
+            <% avatar_owner_of_post = @user.avatar_of_favorite_post(favorite_post, 64) %>
+            <% if avatar_owner_of_post %>
+              <div class="pull-left">
+                <%= image_tag avatar_owner_of_post, class: 'media-object' %>
+              </div>
+            <% end %>
+            <div class="pull-left">
+              <h5><%= favorite_post.title %></h5>
+              <small>
               Voted <%=  pluralize(@user.number_of_votes(@user,favorite_post), 'time') %>,
               Commented <%=  pluralize(@user.number_of_comments(@user,favorite_post), 'time') %>
-            </small>
+              </small>
+            </div>
           </div>
         <% end %>
       </div>
