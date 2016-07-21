@@ -5,14 +5,36 @@ require 'rails_helper'
    let(:my_topic) { create(:topic) }
  
    context "unauthenticated user" do
-     it "GET index returns http success" do
-       get :index
-       expect(response).to have_http_status(:success)
-     end
+     describe "GET index" do
+       before { get :index, id: my_topic.id }
  
-     it "GET show returns http success" do
-       get :show, id: my_topic.id
-       expect(response).to have_http_status(:success)
+       it "returns http success" do
+         expect(response).to have_http_status(:success)
+       end
+ 
+       it "returns json content type" do
+         expect(response.content_type).to eq("application/json")
+       end
+ 
+       it "returns my_user serialized" do
+         expect(response.body).to eq([my_topic].to_json)
+       end
+     end
+
+     describe "GET show" do
+       before { get :show, id: my_topic.id }
+ 
+       it "returns http success" do
+         expect(response).to have_http_status(:success)
+       end
+ 
+       it "returns json content type" do
+         expect(response.content_type).to eq 'application/json'
+       end
+ 
+       it "returns my_user serialized" do
+         expect(response.body).to eq(my_topic.to_json)
+       end
      end
    end
  
@@ -21,14 +43,36 @@ require 'rails_helper'
        controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials(my_user.auth_token)
      end
 
-     it "GET index returns http success" do
-       get :index
-       expect(response).to have_http_status(:success)
-     end
+     describe "GET index" do
+       before { get :index, id: my_topic.id }
  
-     it "GET show returns http success" do
-       get :show, id: my_topic.id
-       expect(response).to have_http_status(:success)
+       it "returns http success" do
+         expect(response).to have_http_status(:success)
+       end
+ 
+       it "returns json content type" do
+         expect(response.content_type).to eq("application/json")
+       end
+ 
+       it "returns my_topic serialized" do
+         expect(response.body).to eq([my_topic].to_json)
+       end
+     end
+
+     describe "GET show" do
+       before { get :show, id: my_topic.id }
+ 
+       it "returns http success" do
+         expect(response).to have_http_status(:success)
+       end
+ 
+       it "returns json content type" do
+         expect(response.content_type).to eq 'application/json'
+       end
+ 
+       it "returns my_topic serialized" do
+         expect(response.body).to eq(my_topic.to_json)
+       end
      end
    end
  end

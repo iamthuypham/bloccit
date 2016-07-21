@@ -31,8 +31,8 @@ class CommentsController < ApplicationController
      end
      
       respond_to do |format|
-        return format.html
-        return format.js
+        format.html
+        format.js
       end
    end
    
